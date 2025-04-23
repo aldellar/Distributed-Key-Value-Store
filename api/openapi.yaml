@@ -1,0 +1,86 @@
+openapi: '3.0.4'
+info:
+  description: CSE138 Assignment 1 
+  title: CSE138 Assignment 1
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+paths:
+  /data/{key}:
+    put:
+      description: Creates/updates a key-value pair
+      requestBody:
+        description: Request Body
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+              required:
+                - value
+              additionalProperties: false
+      parameters:
+      - name: key
+        in: path
+        description: Key of key-value pair
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Key-value pair updated 
+        201:
+          description: Key-value pair created
+    get:
+      description: Gets value of key
+      parameters:
+      - name: key
+        in: path
+        description: Key of key-value pair
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Value of key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: string
+                required:
+                  - value
+                additionalProperties: false
+        404:
+          description: Not found
+    delete:
+      description: Removes key from key-value store
+      parameters:
+      - name: key
+        in: path
+        description: Key of key-value pair
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Key deleted
+        404:
+          description: Not found
+  /data:
+    get:
+      description: Gets key-value store
+      responses:
+        200:
+          description: Key-value store
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string

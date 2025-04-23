@@ -1,0 +1,16 @@
+{
+  "name": "cse138-assignment1",
+  "version": "1.0.0",
+  "description": "CSE138 Assignment 1",
+  "author": "Ian Halim (iphalim@ucsc.edu)",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-openapi-validator": "^5.4.9",
+    "js-yaml": "^4.1.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
