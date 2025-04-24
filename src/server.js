@@ -39,10 +39,12 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get('/ping', data.ping);
 app.put('/data/:key', data.put);
 app.get('/data/:key', data.getById);
 app.delete('/data/:key', data.remove);
 app.get('/data', data.get);
+app.put('/view', data.setView);
 
 app.listen(8081, () => {
   console.log('CSE138 Assignment 1 Server Running');

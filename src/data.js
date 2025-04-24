@@ -1,4 +1,9 @@
 const data = {};
+let view = [];
+
+export async function ping(req, res) {
+  res.status(200).send();
+};
 
 export async function put(req, res) {
   let found = false;
@@ -24,4 +29,9 @@ export async function remove(req, res) {
 
 export async function get(req, res) {
   res.status(200).json(data);
+}
+
+export async function setView(req, res) {
+  view = req.body.view;
+  res.status(200).send();
 }

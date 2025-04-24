@@ -6,6 +6,12 @@ info:
 servers:
   - url: http://localhost:8081
 paths:
+  /ping:
+    get:
+      description: Check if node is initialized
+      responses:
+        200:
+          description: OK
   /data/{key}:
     put:
       description: Creates/updates a key-value pair
@@ -84,3 +90,33 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
+  /view:
+    put:
+      description: Updates view
+      requestBody:
+        description: Request Body
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                view:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                      id:
+                        type: string
+                    required:
+                      - address
+                      - id
+                    additionalProperties: false
+              required:
+                - view
+              additionalProperties: false
+      responses:
+        200:
+          description: View updated 
