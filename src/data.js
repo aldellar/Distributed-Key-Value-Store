@@ -1,5 +1,6 @@
 const data = {};
 let view = [];
+let primary = false;
 
 export async function ping(req, res) {
   res.status(200).send();
@@ -32,6 +33,14 @@ export async function get(req, res) {
 }
 
 export async function setView(req, res) {
+  if (view.length == 0) {
+    let min = Infinity;
+    for (let i in req.body.view) {
+      if (req.body.view[i].id < min) min = req.body.view[i].id; 
+    }
+    if (min == process.env.NODE_IDENTIFIER) primary = true;
+  }
+  console.log(primary)
   view = req.body.view;
   res.status(200).send();
 }

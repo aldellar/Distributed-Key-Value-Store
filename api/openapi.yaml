@@ -109,7 +109,7 @@ paths:
                       address:
                         type: string
                       id:
-                        type: string
+                        type: number
                     required:
                       - address
                       - id
