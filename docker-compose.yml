@@ -1,0 +1,40 @@
+services:
+  node1:
+    build: .
+    image: kvs-node
+    container_name: node1
+    environment:
+      - NODE_IDENTIFIER=node1
+      - PORT=8081
+    ports:
+      - "8081:8081"
+    networks:
+      - kvs-net
+
+  node2:
+    build: .
+    image: kvs-node
+    container_name: node2
+    environment:
+      - NODE_IDENTIFIER=node2
+      - PORT=8082
+    ports:
+      - "8082:8081"
+    networks:
+      - kvs-net
+
+  node3:
+    build: .
+    image: kvs-node
+    container_name: node3
+    environment:
+      - NODE_IDENTIFIER=node3
+      - PORT=8083
+    ports:
+      - "8083:8081"
+    networks:
+      - kvs-net
+
+networks:
+  kvs-net:
+    driver: bridge

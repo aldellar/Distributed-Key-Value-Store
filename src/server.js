@@ -12,7 +12,8 @@ import {fileURLToPath} from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import * as data from './data.js';
+import systemRoutes from './routes/systemRoutes.js';
+import dataRoutes from './routes/dataRoutes.js';
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,12 @@ const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(apidoc));
 
+const port = process.env.PORT;
+apidoc.servers = [
+  {url: `http://localhost:${port}`},
+  {url: `http://127.0.0.1:${port}`}
+];
+
 app.use(
     OpenApiValidator.middleware({
       apiSpec: apiSpec,
@@ -32,21 +39,17 @@ app.use(
 );
 
 app.use((err, req, res, next) => {
-  res.status(err.status > 400 && err.status < 500 ? 400 : err.status).json({
+  res.status(err.status).json({
     message: err.message,
     errors: err.errors,
-    status: err.status > 400 && err.status < 500 ? 400 : err.status,
+    status: err.status,
   });
 });
 
-app.get('/ping', data.ping);
-app.put('/data/:key', data.put);
-app.get('/data/:key', data.getById);
-app.delete('/data/:key', data.remove);
-app.get('/data', data.get);
-app.put('/view', data.setView);
+app.use('/', systemRoutes);
+app.use('/data', dataRoutes);
 
 app.listen(8081, () => {
-  console.log('CSE138 Assignment 1 Server Running');
-  console.log('Swagger UI: http://localhost:8081/docs');
+  console.log('CSE138 Assignment2 Server(s) Running');
+  console.log(`API Testing UI is at: http://localhost:${port}/docs/`);
 });

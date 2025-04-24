@@ -1,10 +1,8 @@
-openapi: '3.0.4'
+openapi: '3.0.3'
 info:
-  description: CSE138 Assignment 1 
-  title: CSE138 Assignment 1
+  description: CSE138 Assignment 2
   version: 1.0.0
-servers:
-  - url: http://localhost:8081
+  title: CSE138 Assignment 2
 paths:
   /ping:
     get:
@@ -15,8 +13,13 @@ paths:
   /data/{key}:
     put:
       description: Creates/updates a key-value pair
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: Request Body
         required: true
         content:
           application/json:
@@ -28,27 +31,19 @@ paths:
               required:
                 - value
               additionalProperties: false
-      parameters:
-      - name: key
-        in: path
-        description: Key of key-value pair
-        required: true
-        schema:
-          type: string
       responses:
         200:
-          description: Key-value pair updated 
+          description: Key-value pair updated
         201:
           description: Key-value pair created
     get:
       description: Gets value of key
       parameters:
-      - name: key
-        in: path
-        description: Key of key-value pair
-        required: true
-        schema:
-          type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Value of key
@@ -63,27 +58,26 @@ paths:
                   - value
                 additionalProperties: false
         404:
-          description: Not found
+          description: Key not found
     delete:
-      description: Removes key from key-value store
+      description: Deletes key from store
       parameters:
-      - name: key
-        in: path
-        description: Key of key-value pair
-        required: true
-        schema:
-          type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Key deleted
         404:
-          description: Not found
+          description: Key not found
   /data:
     get:
-      description: Gets key-value store
+      description: Get all key-value pairs
       responses:
         200:
-          description: Key-value store
+          description: A JSON object of key-value pairs
           content:
             application/json:
               schema:
