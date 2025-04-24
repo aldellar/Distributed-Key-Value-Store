@@ -40,7 +40,6 @@ export async function setView(req, res) {
     }
     if (min == process.env.NODE_IDENTIFIER) primary = true;
   }
-  console.log(primary)
   view = req.body.view;
   res.status(200).send();
 }
