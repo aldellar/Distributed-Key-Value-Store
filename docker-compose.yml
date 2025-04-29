@@ -4,7 +4,7 @@ services:
     image: kvs-node
     container_name: node1
     environment:
-      - NODE_IDENTIFIER=node1
+      - NODE_IDENTIFIER=1
       - PORT=8081
     ports:
       - "8081:8081"
@@ -16,7 +16,7 @@ services:
     image: kvs-node
     container_name: node2
     environment:
-      - NODE_IDENTIFIER=node2
+      - NODE_IDENTIFIER=2
       - PORT=8082
     ports:
       - "8082:8081"
@@ -28,7 +28,7 @@ services:
     image: kvs-node
     container_name: node3
     environment:
-      - NODE_IDENTIFIER=node3
+      - NODE_IDENTIFIER=3
       - PORT=8083
     ports:
       - "8083:8081"

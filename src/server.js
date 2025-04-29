@@ -39,10 +39,10 @@ app.use(
 );
 
 app.use((err, req, res, next) => {
-  res.status(err.status).json({
+  res.status(err.status == 415 ? 400 : err.status).json({
     message: err.message,
     errors: err.errors,
-    status: err.status,
+    status: err.status == 415 ? 400 : err.status,
   });
 });
 

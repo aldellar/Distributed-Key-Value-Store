@@ -9,29 +9,39 @@ import {
 // const myId = process.env.NODE_IDENTIFIER; 
 const router = new express.Router();
 
-router.get('/', (req, res) => {
-  console.log('recieved this request on node', process.env.NODE_IDENTIFIER);
-  res.status(200).json(getAllData());
+//Julian
+router.get('/', async (req, res) => {
+  const result = await getAllData();
+  if (result.data) res.status(200).json(result.data);
+  else res.status(result.status).send();
 });
 
-router.put('/:key', (req, res) => {
+//Andrew
+router.put('/:key', async (req, res) => {
   const {key} = req.params;
   const {value} = req.body;
-  console.log('Received type:', typeof value, 'value:', value);
-  return res.status(setData(key, value) ? 200 : 201).send();
+  const isReplication = req.headers['x-replication'] === 'true';
+  const result = await setData(key, value, isReplication);
+  return res.status(result).send();
 });
 
-router.get('/:key', (req, res) => {
+//Andrew
+router.get('/:key', async (req, res) => {
   const {key} = req.params;
-  const value = getValue(key);
-  if (!value) return res.sendStatus(404);
-  return res.status(200).json({value});
+  const result = await getValue(key);
+  if (result.data) {
+    const value = result.data;
+    res.status(200).json({value});
+  }
+  else res.status(result.status).send();
 });
 
-router.delete('/:key', (req, res) => {
+//Julian
+router.delete('/:key', async (req, res) => {
   const {key} = req.params;
-  const deleted = delValue(key);
-  return res.status(deleted ? 200 : 404).send();
+  const isReplication = req.headers['x-replication'] === 'true';
+  const deleted = await delValue(key, isReplication);
+  return res.status(deleted).send();
 });
 
 export default router;
