@@ -45,8 +45,8 @@ jobs:
               -H "Content-Type: application/json" \
               -d '{
                 "view": [
-                  {"address":"http://3.83.89.100:8081","id":1},
-                  {"address":"http://3.83.89.100:8082","id":2},
-                  {"address":"http://3.83.89.100:8083","id":3}
+                   {"address":"node1:8081","id":1},
+                   {"address":"node2:8081","id":2},
+                   {"address":"node3:8081","id":3}
                 ]
               }'
