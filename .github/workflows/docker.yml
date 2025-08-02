@@ -41,12 +41,14 @@ jobs:
             docker-compose pull
             docker-compose up -d --remove-orphans
             sleep 20
-            curl --retry 5 --retry-delay 5 --fail -X PUT http://3.83.89.100:8081/view \
-              -H "Content-Type: application/json" \
-              -d '{
-                "view": [
-                   {"address":"node1:8081","id":1},
-                   {"address":"node2:8081","id":2},
-                   {"address":"node3:8081","id":3}
-                ]
-              }'
+            for port in 8081 8082 8083; do
+              curl --retry 5 --retry-delay 5 --fail -X PUT http://3.83.89.100:$port/view \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "view": [
+                     {"address":"node1:8081","id":1},
+                     {"address":"node2:8081","id":2},
+                     {"address":"node3:8081","id":3}
+                  ]
+                }'
+            done
