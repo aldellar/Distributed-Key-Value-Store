@@ -24,10 +24,10 @@ const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(apidoc));
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8081;
+
 apidoc.servers = [
-  {url: `http://localhost:${port}`},
-  {url: `http://127.0.0.1:${port}`}
+  { url: `http://${process.env.HOST || '0.0.0.0'}:${port}` }
 ];
 
 app.use(
@@ -49,7 +49,9 @@ app.use((err, req, res, next) => {
 app.use('/', systemRoutes);
 app.use('/data', dataRoutes);
 
-app.listen(8081, () => {
+app.listen(port, () => {
   console.log('CSE138 Assignment2 Server(s) Running');
-  console.log(`API Testing UI is at: http://localhost:${port}/docs/`);
+
+  const host = process.env.HOST || '0.0.0.0';
+  console.log(`API Testing UI is at: http://${host}:${port}/docs/`);
 });
