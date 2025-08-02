@@ -50,8 +50,6 @@ app.use('/', systemRoutes);
 app.use('/data', dataRoutes);
 
 app.listen(port, () => {
-  console.log('Distrbuted Key Value Store {');
-
   const host = process.env.HOST || '0.0.0.0';
   console.log(`API Testing UI is at: http://${host}:${port}/docs/`);
 });

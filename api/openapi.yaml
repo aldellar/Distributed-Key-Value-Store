@@ -1,8 +1,8 @@
 openapi: '3.0.3'
 info:
-  description: CSE138 Assignment 2
+  description: Distributed Key Value Store
   version: 1.0.0
-  title: CSE138 Assignment 2
+  title: Distributed Key Value Store
 paths:
   /ping:
     get:
