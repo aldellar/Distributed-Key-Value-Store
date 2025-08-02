@@ -49,7 +49,7 @@ app.use((err, req, res, next) => {
 app.use('/', systemRoutes);
 app.use('/data', dataRoutes);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   const host = process.env.HOST || '0.0.0.0';
   console.log(`API Testing UI is at: http://${host}:${port}/docs/`);
 });
